@@ -35,7 +35,13 @@ jobs:
         run: npx next build --webpack
 
       - name: Verificar out/
-        run: "ls -la out/ && echo 'OK: out existe'"
+        run: |
+          if [ ! -d out ]; then
+            echo "ERROR: carpeta out/ no existe después del build. Contenido del repo:"
+            ls -la
+            exit 1
+          fi
+          ls -la out/
 
       - name: Copiar out a raíz (para script)
         run: node scripts/copy-out-to-root.cjs
@@ -52,6 +58,7 @@ jobs:
           cp -r deploy /tmp/deploy-site
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          git remote set-url origin "https://x-access-token:$GITHUB_TOKEN@github.com/${{ github.repository }}.git"
           git checkout --orphan build
           git reset --hard
           git clean -fdx
