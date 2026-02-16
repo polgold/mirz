@@ -39,10 +39,17 @@ jobs:
           ls -la deploy/
 
       - name: Push deploy/ a rama build
-        uses: s0/git-publish-subdir-action@v2.6.0
+        run: |
+          cp -r deploy /tmp/deploy-site
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout --orphan build
+          git reset --hard
+          git clean -fdx
+          cp -r /tmp/deploy-site/. .
+          git add -A
+          git status
+          git commit -m "Deploy: ${{ github.sha }}"
+          git push -f origin build
         env:
-          REPO: self
-          BRANCH: build
-          FOLDER: deploy
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          MESSAGE: "Deploy: ${{ github.sha }}"
