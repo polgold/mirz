@@ -7,7 +7,7 @@ type Props = { params: Promise<{ locale: string }> };
 export default async function StatementPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const { content, data } = await getCopy('statement');
+  const { content, data } = await getCopy('statement', locale as 'es' | 'en');
   const title = (data.title as string) || 'Statement';
 
   return (

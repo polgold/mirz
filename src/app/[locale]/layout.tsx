@@ -4,6 +4,7 @@ import { hasLocale } from 'next-intl';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 import SetLocaleAttr from '@/components/SetLocaleAttr';
 
 type Props = {
@@ -24,13 +25,14 @@ export default async function LocaleLayout({ children, params }: Props) {
   return (
     <NextIntlClientProvider messages={messages}>
       <SetLocaleAttr locale={locale} />
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen flex flex-col bg-white">
         <Header />
-        <main className="py-12 md:py-16 lg:py-20">
+        <main className="flex-1 py-12 md:py-16 lg:py-20">
           <div className="mx-auto w-full max-w-5xl px-4 sm:px-6 lg:px-8">
             {children}
           </div>
         </main>
+        <Footer />
       </div>
     </NextIntlClientProvider>
   );

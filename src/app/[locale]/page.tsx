@@ -7,7 +7,7 @@ type Props = { params: Promise<{ locale: string }> };
 export default async function HomePage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const { content, title, data } = await getCopy('home');
+  const { content, title, data } = await getCopy('home', locale as 'es' | 'en');
   const subtitle = data?.subtitle as string | undefined;
 
   return (

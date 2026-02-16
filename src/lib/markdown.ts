@@ -4,38 +4,63 @@ import matter from 'gray-matter';
 import { unified } from 'unified';
 import remarkParse from 'remark-parse';
 import remarkHtml from 'remark-html';
+import { routing } from '@/i18n/routing';
 
 const COPY_DIR = path.join(process.cwd(), 'source', 'copy');
 
-const DEFAULT_PLACEHOLDERS: Record<string, { title: string; body: string }> = {
-  home: {
-    title: 'Mirta Zaliauskas',
-    body: '<p>Artista visual. Bienvenidos a este espacio.</p>',
+type Locale = (typeof routing.locales)[number];
+
+const DEFAULT_PLACEHOLDERS: Record<
+  Locale,
+  Record<string, { title: string; body: string }>
+> = {
+  es: {
+    home: {
+      title: 'Mirta Zaliauskas',
+      body: '<p>Artista visual. Bienvenidos a este espacio.</p>',
+    },
+    press: {
+      title: 'Prensa',
+      body: '<p>Contenido de prensa próximamente.</p>',
+    },
+    contact: {
+      title: 'Contacto',
+      body: '<p>Información de contacto próximamente.</p>',
+    },
   },
-  press: {
-    title: 'Prensa',
-    body: '<p>Contenido de prensa próximamente.</p>',
-  },
-  contact: {
-    title: 'Contacto',
-    body: '<p>Información de contacto próximamente.</p>',
+  en: {
+    home: {
+      title: 'Mirta Zaliauskas',
+      body: '<p>Visual artist. Welcome to this space.</p>',
+    },
+    press: {
+      title: 'Press',
+      body: '<p>Press content coming soon.</p>',
+    },
+    contact: {
+      title: 'Contact',
+      body: '<p>Contact information coming soon.</p>',
+    },
   },
 };
 
 export type CopySlug = 'home' | 'bio' | 'statement' | 'press' | 'contact';
 
-export async function getCopy(slug: CopySlug): Promise<{
+export async function getCopy(
+  slug: CopySlug,
+  locale: Locale
+): Promise<{
   content: string;
   data: Record<string, unknown>;
   title?: string;
 }> {
-  const filePath = path.join(COPY_DIR, `${slug}.md`);
+  const filePath = path.join(COPY_DIR, locale, `${slug}.md`);
   let raw = '';
 
   try {
     raw = fs.readFileSync(filePath, 'utf-8');
   } catch {
-    const placeholder = DEFAULT_PLACEHOLDERS[slug];
+    const placeholder = DEFAULT_PLACEHOLDERS[locale]?.[slug];
     if (placeholder) {
       return {
         content: placeholder.body,
@@ -48,7 +73,7 @@ export async function getCopy(slug: CopySlug): Promise<{
 
   const trimmed = raw.trim();
   if (!trimmed) {
-    const placeholder = DEFAULT_PLACEHOLDERS[slug];
+    const placeholder = DEFAULT_PLACEHOLDERS[locale]?.[slug];
     if (placeholder) {
       return {
         content: placeholder.body,

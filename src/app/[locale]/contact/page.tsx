@@ -7,7 +7,7 @@ type Props = { params: Promise<{ locale: string }> };
 export default async function ContactPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const { content, title } = await getCopy('contact');
+  const { content, title } = await getCopy('contact', locale as 'es' | 'en');
 
   return (
     <article className="max-w-3xl">

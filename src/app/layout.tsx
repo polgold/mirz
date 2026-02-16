@@ -15,8 +15,12 @@ const lora = Lora({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://mirtazaliauskas.com"),
   title: "Mirta Zaliauskas",
   description: "Artista visual — Escultura, dibujo, pintura",
+  openGraph: {
+    url: "https://mirtazaliauskas.com",
+  },
 };
 
 export default function RootLayout({

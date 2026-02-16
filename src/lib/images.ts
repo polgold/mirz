@@ -35,7 +35,7 @@ export function getGalleryCategories(): GalleryCategory[] {
     const folderPath = path.join(IMAGES_DIR, folder);
     const files = (fs.readdirSync(folderPath) as string[]).filter(isImageFile).sort();
     const images = files.map((file) => ({
-      src: `/api/images/${folder}/${file}`,
+      src: `/images/${folder}/${file}`,
       alt: file.replace(path.extname(file), '').replace(/[-_]/g, ' '),
     }));
     if (images.length > 0) {

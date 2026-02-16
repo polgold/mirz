@@ -2,10 +2,14 @@
   "name": "mirz-next",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "18.x"
+  },
   "scripts": {
     "dev": "next dev",
+    "prebuild": "node -e \"require('fs').cpSync('source/images','public/images',{recursive:true})\"",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p $PORT",
     "lint": "eslint"
   },
   "dependencies": {

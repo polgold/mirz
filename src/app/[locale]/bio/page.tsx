@@ -7,7 +7,7 @@ type Props = { params: Promise<{ locale: string }> };
 export default async function BioPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const { content, data } = await getCopy('bio');
+  const { content, data } = await getCopy('bio', locale as 'es' | 'en');
   const title = (data.title as string) || 'Bio';
 
   return (
