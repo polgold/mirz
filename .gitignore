@@ -17,6 +17,24 @@
 /.next/
 /out/
 
+# postbuild: copia de out/ a raíz (solo para deploy Hostinger; no commitear)
+/index.html
+/404.html
+/_next/
+/en/
+/es/
+/404/
+/_not-found/
+/index.txt
+/__next.*.txt
+/favicon.ico
+/file.svg
+/globe.svg
+/images/
+/next.svg
+/vercel.svg
+/window.svg
+
 # production
 /build
 
