@@ -1,15 +1,22 @@
 /**
- * Copia el contenido de out/ a la raíz del proyecto.
- * Para Hostinger: con "Output directory" en null, sirven la raíz y así encuentran el sitio.
+ * Copia el contenido de out/ a la raíz del proyecto (cwd).
+ * Para Hostinger: Output directory null o raíz.
  */
 const fs = require("fs");
 const path = require("path");
 
-const outDir = path.join(__dirname, "..", "out");
-const rootDir = path.join(__dirname, "..");
+const cwd = process.cwd();
+const outDir = path.join(cwd, "out");
+const rootDir = cwd;
 
 if (!fs.existsSync(outDir)) {
-  console.error("No existe la carpeta out/. Ejecutá npm run build primero.");
+  console.error("No existe la carpeta out/ en " + outDir + " (cwd: " + cwd + ")");
+  try {
+    const entries = fs.readdirSync(cwd);
+    console.error("Contenido de cwd:", entries.join(", "));
+  } catch (e) {
+    console.error(e.message);
+  }
   process.exit(1);
 }
 
