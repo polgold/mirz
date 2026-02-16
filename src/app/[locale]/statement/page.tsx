@@ -11,24 +11,26 @@ export default async function StatementPage({ params }: Props) {
   const title = (data.title as string) || 'Statement';
 
   return (
-    <article className="max-w-3xl">
+    <article className="max-w-4xl">
       <header className="mb-10 md:mb-12">
-        <figure className="mb-8 overflow-hidden rounded-sm bg-neutral-100">
-          <img
-            src="/images/home/mir.jpeg"
-            alt=""
-            className="w-full object-cover"
-            width={800}
-            height={500}
-          />
-        </figure>
         <h1 className="font-heading text-3xl font-medium tracking-tight text-neutral-900 md:text-4xl">
           {title}
         </h1>
       </header>
-      <section className="space-y-6">
-        <MarkdownContent html={content} />
-      </section>
+      <div className="flex flex-col gap-8 md:flex-row md:items-start md:gap-10">
+        <figure className="shrink-0 overflow-hidden rounded-sm bg-neutral-100 md:w-56 md:max-w-[14rem]">
+          <img
+            src="/images/home/mir.jpeg"
+            alt=""
+            className="h-auto w-full object-cover"
+            width={224}
+            height={280}
+          />
+        </figure>
+        <section className="min-w-0 flex-1 space-y-6">
+          <MarkdownContent html={content} />
+        </section>
+      </div>
     </article>
   );
 }

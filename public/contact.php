@@ -1,0 +1,109 @@
+<?php
+/**
+ * Formulario de contacto → envía a hola@mirtazaliauskas.com
+ * SMTP Hostinger: smtp.hostinger.com, puerto 465, SSL
+ *
+ * En el servidor (Hostinger), creá contact_config.php en el mismo directorio con:
+ * <?php define('SMTP_PASS', 'tu-contraseña-del-correo');
+ * No subas contact_config.php a git (está en .gitignore).
+ */
+header('Content-Type: application/json; charset=utf-8');
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: POST, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type');
+
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+  http_response_code(204);
+  exit;
+}
+
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+  http_response_code(405);
+  echo json_encode(['ok' => false, 'error' => 'Method not allowed']);
+  exit;
+}
+
+$name = isset($_POST['name']) ? trim((string) $_POST['name']) : '';
+$email = isset($_POST['email']) ? trim((string) $_POST['email']) : '';
+$message = isset($_POST['message']) ? trim((string) $_POST['message']) : '';
+
+if ($name === '' || $email === '' || $message === '') {
+  http_response_code(400);
+  echo json_encode(['ok' => false, 'error' => 'Missing fields']);
+  exit;
+}
+
+$to = 'hola@mirtazaliauskas.com';
+$smtp_host = 'smtp.hostinger.com';
+$smtp_port = 465;
+$smtp_user = $to;
+
+$pass = null;
+if (file_exists(__DIR__ . '/contact_config.php')) {
+  include __DIR__ . '/contact_config.php';
+  $pass = defined('SMTP_PASS') ? SMTP_PASS : null;
+}
+if ($pass === null || $pass === '') {
+  http_response_code(500);
+  echo json_encode(['ok' => false, 'error' => 'Server config missing']);
+  exit;
+}
+
+$subject = 'Contacto web: ' . mb_substr($name, 0, 50);
+$body = "Nombre: $name\nEmail: $email\n\nMensaje:\n$message";
+$headers = "From: $to\r\nReply-To: $email\r\nContent-Type: text/plain; charset=UTF-8";
+
+$errno = 0;
+$errstr = '';
+$ctx = stream_context_create(['ssl' => ['verify_peer' => true]]);
+$sock = @stream_socket_client(
+  "ssl://$smtp_host:$smtp_port",
+  $errno,
+  $errstr,
+  15,
+  STREAM_CLIENT_CONNECT,
+  $ctx
+);
+
+if (!$sock) {
+  http_response_code(502);
+  echo json_encode(['ok' => false, 'error' => 'SMTP connection failed']);
+  exit;
+}
+
+function smtp_line($sock) {
+  $line = '';
+  while (($c = fgetc($sock)) !== false) {
+    $line .= $c;
+    if ($c === "\n") break;
+  }
+  return $line;
+}
+
+function smtp_cmd($sock, $cmd) {
+  fwrite($sock, $cmd . "\r\n");
+  return smtp_line($sock);
+}
+
+$w = smtp_line($sock);
+smtp_cmd($sock, "EHLO " . $smtp_host);
+smtp_cmd($sock, "AUTH LOGIN");
+smtp_cmd($sock, base64_encode($smtp_user));
+$auth = smtp_cmd($sock, base64_encode($pass));
+if (strpos($auth, '235') === false) {
+  fclose($sock);
+  http_response_code(503);
+  echo json_encode(['ok' => false, 'error' => 'SMTP auth failed']);
+  exit;
+}
+
+smtp_cmd($sock, "MAIL FROM:<$smtp_user>");
+smtp_cmd($sock, "RCPT TO:<$to>");
+$r = smtp_cmd($sock, "DATA");
+fwrite($sock, "Subject: $subject\r\n$headers\r\n\r\n$body\r\n.\r\n");
+smtp_line($sock);
+smtp_cmd($sock, "QUIT");
+fclose($sock);
+
+echo json_encode(['ok' => true]);
+exit;

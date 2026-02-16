@@ -52,6 +52,9 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 
+# contraseña SMTP (crear en servidor, no commitear)
+public/contact_config.php
+
 # vercel
 .vercel
 

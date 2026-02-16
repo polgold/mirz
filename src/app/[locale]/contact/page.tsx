@@ -1,6 +1,7 @@
 import { setRequestLocale } from 'next-intl/server';
 import { getCopy } from '@/lib/markdown';
 import MarkdownContent from '@/components/MarkdownContent';
+import ContactForm from '@/components/ContactForm';
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -21,6 +22,7 @@ export default async function ContactPage({ params }: Props) {
       <section className="space-y-6">
         <MarkdownContent html={content} />
       </section>
+      <ContactForm />
     </article>
   );
 }

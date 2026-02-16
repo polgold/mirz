@@ -1,7 +1,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-const IMAGES_DIR = path.join(process.cwd(), 'source', 'images');
+/** Leer desde public/images (todo ordenado; prebuild ya copió source → public). */
+const IMAGES_DIR = path.join(process.cwd(), 'public', 'images');
 const IMAGE_EXTENSIONS = new Set(['.jpg', '.jpeg', '.png', '.gif', '.webp', '.avif']);
 const VIDEO_EXTENSIONS = new Set(['.mp4', '.webm']);
 
@@ -59,7 +60,7 @@ function isVideoFile(name: string): boolean {
   return VIDEO_EXTENSIONS.has(path.extname(name).toLowerCase());
 }
 
-/** Hero de la home: video + imágenes mir8..mir15 desde source/images/home. */
+/** Hero de la home: video + imágenes mir8..mir15 desde public/images/home. */
 export function getHomeHeroMedia(): { video: string | null; images: string[] } {
   const homePath = path.join(IMAGES_DIR, 'home');
   try {

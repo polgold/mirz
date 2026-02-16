@@ -7,7 +7,6 @@
   },
   "scripts": {
     "dev": "next dev",
-    "prebuild": "node -e \"require('fs').cpSync('source/images','public/images',{recursive:true})\"",
     "build": "next build --webpack && node scripts/copy-out-to-root.cjs",
     "start": "next start -p $PORT",
     "lint": "eslint"
