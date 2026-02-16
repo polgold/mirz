@@ -53,9 +53,16 @@ export default function Header() {
           {/* Logo */}
           <Link
             href="/"
-            className="font-heading text-lg font-medium tracking-tight text-neutral-900 transition-opacity duration-200 hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-400 focus:outline-none"
+            className="transition-opacity duration-200 hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-400 focus:outline-none"
+            aria-label="Mirta Zaliauskas - Inicio"
           >
-            Mirta Zaliauskas
+            <img
+              src="/images/home/logo.png"
+              alt="Mirta Zaliauskas"
+              className="h-8 w-auto md:h-9"
+              width={120}
+              height={36}
+            />
           </Link>
 
           {/* Desktop nav */}

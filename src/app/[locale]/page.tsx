@@ -1,5 +1,6 @@
 import { setRequestLocale } from 'next-intl/server';
 import { getCopy } from '@/lib/markdown';
+import { getHomeHeroMedia } from '@/lib/images';
 import MarkdownContent from '@/components/MarkdownContent';
 
 type Props = { params: Promise<{ locale: string }> };
@@ -9,9 +10,47 @@ export default async function HomePage({ params }: Props) {
   setRequestLocale(locale);
   const { content, title, data } = await getCopy('home', locale as 'es' | 'en');
   const subtitle = data?.subtitle as string | undefined;
+  const { video, images: heroImages } = getHomeHeroMedia();
 
   return (
     <article className="max-w-3xl">
+      {/* Hero: video */}
+      {video && (
+        <section className="mb-12 md:mb-16 overflow-hidden rounded-sm bg-neutral-100">
+          <video
+            src={video}
+            controls
+            playsInline
+            className="w-full"
+            poster=""
+          >
+            Tu navegador no soporta el elemento de video.
+          </video>
+        </section>
+      )}
+
+      {/* Fotos mir8 a mir15 */}
+      {heroImages.length > 0 && (
+        <section className="mb-12 md:mb-16">
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:gap-4">
+            {heroImages.map((src) => (
+              <div
+                key={src}
+                className="aspect-square overflow-hidden rounded-sm bg-neutral-100"
+              >
+                <img
+                  src={src}
+                  alt=""
+                  className="h-full w-full object-cover"
+                  width={400}
+                  height={400}
+                />
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
       <header className="mb-12 md:mb-16">
         {title && (
           <h1 className="font-heading text-4xl font-medium tracking-tight text-neutral-900 md:text-5xl lg:text-[2.75rem]">

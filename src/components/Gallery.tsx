@@ -7,10 +7,9 @@ import type { GalleryCategory } from '@/lib/images';
 
 const CATEGORY_KEYS: Record<string, string> = {
   escultura: 'escultura',
+  esculturas: 'esculturas',
   pinturas: 'pinturas',
   vidrio: 'vidrio',
-  home: 'home',
-  media: 'media',
 };
 
 type Props = { categories: GalleryCategory[] };

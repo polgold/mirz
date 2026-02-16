@@ -13,6 +13,15 @@ export default async function StatementPage({ params }: Props) {
   return (
     <article className="max-w-3xl">
       <header className="mb-10 md:mb-12">
+        <figure className="mb-8 overflow-hidden rounded-sm bg-neutral-100">
+          <img
+            src="/images/home/mir.jpeg"
+            alt=""
+            className="w-full object-cover"
+            width={800}
+            height={500}
+          />
+        </figure>
         <h1 className="font-heading text-3xl font-medium tracking-tight text-neutral-900 md:text-4xl">
           {title}
         </h1>
