@@ -8,6 +8,9 @@ on:
     branches:
       - main
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -31,8 +34,9 @@ jobs:
       - name: Preparar carpeta para Hostinger (out + package.json no-op)
         run: |
           mkdir -p deploy
-          cp -r out/* deploy/
+          cp -r out/. deploy/ 2>/dev/null || cp -r out/* deploy/
           echo '{"name":"static","version":"1.0.0","private":true,"scripts":{"build":"echo done"}}' > deploy/package.json
+          ls -la deploy/
 
       - name: Push deploy/ a rama build
         uses: s0/git-publish-subdir-action@v2.6.0
