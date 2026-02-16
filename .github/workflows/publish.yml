@@ -19,6 +19,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Inicio
+        run: echo "1_checkout" >> $GITHUB_STEP_SUMMARY
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -26,28 +29,41 @@ jobs:
           cache: "npm"
 
       - name: Install dependencies
-        run: npm ci
+        run: |
+          echo "2_install" >> $GITHUB_STEP_SUMMARY
+          npm ci
 
       - name: Prebuild (copiar imágenes)
-        run: npm run prebuild
+        run: |
+          echo "3_prebuild" >> $GITHUB_STEP_SUMMARY
+          npm run prebuild || (echo "AVISO: prebuild falló"; ls -la source/ 2>/dev/null || true)
 
       - name: Build Next (export estático)
-        run: npx next build --webpack
+        run: |
+          echo "4_build_next" >> $GITHUB_STEP_SUMMARY
+          npx next build --webpack
+        env:
+          NODE_OPTIONS: "--max-old-space-size=4096"
 
       - name: Verificar out/
         run: |
+          echo "5_verificar_out" >> $GITHUB_STEP_SUMMARY
           if [ ! -d out ]; then
-            echo "ERROR: carpeta out/ no existe después del build. Contenido del repo:"
+            echo "ERROR: carpeta out/ no existe. Contenido:" >> $GITHUB_STEP_SUMMARY
+            ls -la >> $GITHUB_STEP_SUMMARY
             ls -la
             exit 1
           fi
           ls -la out/
 
       - name: Copiar out a raíz (para script)
-        run: node scripts/copy-out-to-root.cjs
+        run: |
+          echo "6_copiar" >> $GITHUB_STEP_SUMMARY
+          node scripts/copy-out-to-root.cjs
 
       - name: Preparar carpeta para Hostinger (out + package.json no-op)
         run: |
+          echo "7_preparar_deploy" >> $GITHUB_STEP_SUMMARY
           mkdir -p deploy
           cp -r out/. deploy/ 2>/dev/null || cp -r out/* deploy/
           echo '{"name":"static","version":"1.0.0","private":true,"scripts":{"build":"echo done"}}' > deploy/package.json
@@ -55,6 +71,7 @@ jobs:
 
       - name: Push deploy/ a rama build
         run: |
+          echo "8_push" >> $GITHUB_STEP_SUMMARY
           cp -r deploy /tmp/deploy-site
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
