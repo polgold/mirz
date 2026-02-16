@@ -35,7 +35,7 @@ jobs:
         run: npx next build --webpack
 
       - name: Verificar out/
-        run: ls -la out/ && echo "OK: out existe"
+        run: "ls -la out/ && echo 'OK: out existe'"
 
       - name: Copiar out a raíz (para script)
         run: node scripts/copy-out-to-root.cjs
