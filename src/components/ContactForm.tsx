@@ -24,14 +24,20 @@ export default function ContactForm() {
         body: formData,
       });
       const text = await res.text();
+      let data: { ok?: boolean; error?: string } = {};
+      try {
+        data = JSON.parse(text);
+      } catch {
+        /* no JSON */
+      }
 
-      if (res.ok) {
+      if (res.ok && data.ok) {
         setStatus('ok');
         setMessage(t('success'));
         form.reset();
       } else {
         setStatus('error');
-        setMessage(t('error'));
+        setMessage(data.error ? `${t('error')} (${data.error})` : t('error'));
       }
     } catch {
       setStatus('error');

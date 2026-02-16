@@ -33,8 +33,8 @@ function LocaleLink({ code, label }: { code: 'es' | 'en'; label: string }) {
       locale={code}
       className={`
         text-sm transition-colors duration-200
-        focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-400 focus:outline-none
-        ${isActive ? 'font-medium text-neutral-900' : 'text-neutral-500 hover:text-neutral-900'}
+        focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white focus:outline-none
+        ${isActive ? 'font-medium text-white' : 'text-white/80 hover:text-white'}
       `}
     >
       {label}
@@ -47,13 +47,13 @@ export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-neutral-200/80 bg-white/90 backdrop-blur-md supports-[backdrop-filter]:bg-white/95">
+    <header className="sticky top-0 z-50 border-b border-neutral-700 bg-neutral-900 text-white backdrop-blur-md supports-[backdrop-filter]:bg-neutral-900/95">
       <Container>
         <div className="flex h-16 items-center justify-between gap-6">
-          {/* Logo */}
+          {/* Logo (blanco sobre fondo negro) */}
           <Link
             href="/"
-            className="transition-opacity duration-200 hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-400 focus:outline-none"
+            className="transition-opacity duration-200 hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white focus:outline-none"
             aria-label="Mirta Zaliauskas - Inicio"
           >
             <img
@@ -71,7 +71,7 @@ export default function Header() {
             aria-label="Main navigation"
           >
             {NAV_ITEMS.map(({ href, key }) => (
-              <NavLink key={key} href={href}>
+              <NavLink key={key} href={href} variant="dark">
                 {t(key)}
               </NavLink>
             ))}
@@ -79,7 +79,7 @@ export default function Header() {
 
           {/* Language + hamburger */}
           <div className="flex items-center gap-4">
-            <div className="flex items-center gap-3 border-l border-neutral-200 pl-4">
+            <div className="flex items-center gap-3 border-l border-neutral-600 pl-4">
               {LOCALES.map(({ code, label }) => (
                 <LocaleLink key={code} code={code} label={label} />
               ))}
@@ -88,7 +88,7 @@ export default function Header() {
             <button
               type="button"
               onClick={() => setMobileOpen((o) => !o)}
-              className="flex h-10 w-10 items-center justify-center rounded-md text-neutral-600 transition-colors hover:bg-neutral-100 hover:text-neutral-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-400 focus:outline-none md:hidden"
+              className="flex h-10 w-10 items-center justify-center rounded-md text-white/90 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white focus:outline-none md:hidden"
               aria-expanded={mobileOpen}
               aria-controls="mobile-nav"
               aria-label={mobileOpen ? 'Cerrar menú' : 'Abrir menú'}
@@ -124,7 +124,7 @@ export default function Header() {
       {/* Mobile nav */}
       <div
         id="mobile-nav"
-        className={`border-t border-neutral-200/80 bg-white/98 backdrop-blur-md transition-[height,opacity] duration-200 ease-out md:hidden ${
+        className={`border-t border-neutral-700 bg-neutral-900 backdrop-blur-md transition-[height,opacity] duration-200 ease-out md:hidden ${
           mobileOpen ? 'visible h-auto opacity-100' : 'invisible h-0 overflow-hidden opacity-0'
         }`}
         aria-hidden={!mobileOpen}
@@ -139,7 +139,7 @@ export default function Header() {
                 key={key}
                 href={href}
                 onClick={() => setMobileOpen(false)}
-                className="rounded-md px-2 py-2.5 text-sm text-neutral-600 transition-colors hover:bg-neutral-50 hover:text-neutral-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-400 focus:outline-none"
+                className="rounded-md px-2 py-2.5 text-sm text-white/90 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white focus:outline-none"
               >
                 {t(key)}
               </Link>

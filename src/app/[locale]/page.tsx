@@ -13,15 +13,18 @@ export default async function HomePage({ params }: Props) {
   const { video, images: heroImages } = getHomeHeroMedia();
 
   return (
-    <article className="max-w-3xl">
-      {/* Hero: video */}
+    <>
+      {/* Hero: video a ancho completo, autoplay mute, con controles para activar sonido */}
       {video && (
-        <section className="mb-12 md:mb-16 overflow-hidden rounded-sm bg-neutral-100">
+        <section className="mb-12 md:mb-16 w-full overflow-hidden bg-neutral-900">
           <video
             src={video}
             controls
             playsInline
-            className="w-full"
+            autoPlay
+            muted
+            loop
+            className="mx-auto block w-full max-w-full object-contain"
             poster=""
           >
             Tu navegador no soporta el elemento de video.
@@ -29,6 +32,7 @@ export default async function HomePage({ params }: Props) {
         </section>
       )}
 
+      <article className="max-w-3xl">
       {/* Fotos mir8 a mir15 */}
       {heroImages.length > 0 && (
         <section className="mb-12 md:mb-16">
@@ -67,5 +71,6 @@ export default async function HomePage({ params }: Props) {
         <MarkdownContent html={content} />
       </section>
     </article>
+    </>
   );
 }
