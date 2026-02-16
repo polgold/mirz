@@ -28,11 +28,17 @@ jobs:
       - name: Build static export
         run: npm run build
 
-      - name: Push out/ to build branch
+      - name: Preparar carpeta para Hostinger (out + package.json no-op)
+        run: |
+          mkdir -p deploy
+          cp -r out/* deploy/
+          echo '{"name":"static","version":"1.0.0","private":true,"scripts":{"build":"echo done"}}' > deploy/package.json
+
+      - name: Push deploy/ a rama build
         uses: s0/git-publish-subdir-action@v2.6.0
         env:
           REPO: self
           BRANCH: build
-          FOLDER: out
+          FOLDER: deploy
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           MESSAGE: "Deploy: ${{ github.sha }}"

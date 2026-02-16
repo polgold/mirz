@@ -4,15 +4,18 @@ Este proyecto se exporta como sitio 100% estático.
 
 ---
 
-## Opción A: Hostinger leyendo GitHub (despliegue automático)
+## Opción A: Hostinger leyendo la rama `build` (recomendado)
 
-Si Hostinger está configurado para hacer pull desde GitHub:
+El build en el servidor de Hostinger **no genera** la carpeta `out` (limitación de su entorno). La solución es construir en **GitHub Actions** y que Hostinger sirva la rama **`build`**, que ya contiene el sitio estático.
 
-1. **En Hostinger (GIT):** Rama a usar = **`build`** (no `main`). El workflow sube el sitio compilado a esa rama.
-2. **En GitHub:** Cada push a **`main`** dispara el workflow que hace `npm run build` y sube el contenido de **`out`** a la rama **`build`**.
-3. **En Hostinger:** Activar **Auto Deployment** (webhook) si quieres que, al hacer push a `main`, Hostinger haga pull de `build` y actualice el sitio.
+1. **En Hostinger (Deployments / Settings):**
+   - **Branch:** **`build`** (no `main`).
+   - **Build command:** `npm run build` (en esa rama solo hace `echo done`).
+   - **Output directory:** **`.`** (punto) o **`null`** — así se sirve la raíz, donde ya están `index.html`, `_next`, `en`, `es`.
+2. **En GitHub:** Cada push a **`main`** dispara el workflow: construye el sitio, sube la carpeta **`deploy`** (sitio + un `package.json` mínimo) a la rama **`build`**.
+3. **En Hostinger:** Activar **Auto Deployment** (webhook) para que, al actualizar `build`, se redespliegue el sitio.
 
-**Resumen:** Push a `main` → GitHub Actions construye y sube a `build` → Hostinger hace pull de `build` y sirve esa raíz (index.html, _next, en, es).
+**Resumen:** Push a `main` → GitHub Actions construye y sube a `build` → Hostinger hace pull de `build` y sirve la raíz (index.html, _next, en, es).
 
 Si el repo es privado, en Hostinger genera la SSH key y añádela en GitHub como Deploy key (solo lectura) del repo.
 

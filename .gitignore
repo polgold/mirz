@@ -16,6 +16,7 @@
 # next.js
 /.next/
 /out/
+/deploy/
 
 # postbuild: copia de out/ a raíz (solo para deploy Hostinger; no commitear)
 /index.html
