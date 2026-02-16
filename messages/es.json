@@ -1,0 +1,24 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "bio": "Bio",
+    "statement": "Statement",
+    "works": "Obra",
+    "press": "Prensa",
+    "contact": "Contacto"
+  },
+  "home": {
+    "title": "Mirta Zaliauskas"
+  },
+  "works": {
+    "title": "Obra",
+    "all": "Todas",
+    "category": {
+      "escultura": "Escultura",
+      "pinturas": "Pinturas",
+      "vidrio": "Vidrio",
+      "home": "Home",
+      "media": "Media"
+    }
+  }
+}
