@@ -67,6 +67,8 @@ jobs:
           mkdir -p deploy
           cp -r out/. deploy/ 2>/dev/null || cp -r out/* deploy/
           echo '{"name":"static","version":"1.0.0","private":true,"scripts":{"build":"echo done"}}' > deploy/package.json
+          echo 'module.exports = { output: "export" };' > deploy/next.config.js
+          mkdir -p deploy/app && echo 'export default function Page() { return null; }' > deploy/app/page.js
           ls -la deploy/
 
       - name: Push deploy/ a rama build
