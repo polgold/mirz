@@ -70,8 +70,8 @@ function smtp_cmd($sock, $cmd) {
   return smtp_line($sock);
 }
 
-// Probar primero 465 (SSL directo); si falla, 587 + STARTTLS
-$ctx = stream_context_create(['ssl' => ['verify_peer' => true]]);
+// Solo 465 SSL (evitar STARTTLS que suele fallar en Hostinger). Sin verificación de certificado.
+$ctx = stream_context_create(['ssl' => ['verify_peer' => false, 'verify_peer_name' => false]]);
 $sock = @stream_socket_client(
   "ssl://$smtp_host:465",
   $errno,
@@ -82,22 +82,12 @@ $sock = @stream_socket_client(
 );
 
 if (!$sock) {
-  $sock = @stream_socket_client("tcp://$smtp_host:587", $errno, $errstr, 15, STREAM_CLIENT_CONNECT);
-  if (!$sock) {
-    http_response_code(502);
-    echo json_encode(['ok' => false, 'error' => 'SMTP connection failed']);
-    exit;
-  }
-  smtp_line($sock);
-  smtp_cmd($sock, "EHLO " . $smtp_host);
-  $starttls = smtp_cmd($sock, "STARTTLS");
-  if (strpos($starttls, '220') !== false) {
-    @stream_socket_enable_crypto($sock, true, STREAM_CRYPTO_METHOD_TLS_CLIENT);
-  }
-} else {
-  smtp_line($sock);
+  http_response_code(502);
+  echo json_encode(['ok' => false, 'error' => 'SMTP connection failed']);
+  exit;
 }
 
+smtp_line($sock);
 smtp_cmd($sock, "EHLO " . $smtp_host);
 smtp_cmd($sock, "AUTH LOGIN");
 smtp_cmd($sock, base64_encode($smtp_user));
