@@ -3,9 +3,9 @@
  * Formulario de contacto → envía a hola@mirtazaliauskas.com
  * SMTP Hostinger: smtp.hostinger.com, puerto 587, STARTTLS
  *
- * En el servidor (Hostinger), creá contact_config.php en el mismo directorio con:
- * <?php define('SMTP_PASS', 'tu-contraseña-del-correo');
- * No subas contact_config.php a git (está en .gitignore).
+ * Config: busca contact_config.php en este directorio o en el padre (../).
+ * Poniendo la config en el directorio padre no se pierde al hacer deploy.
+ * Contenido: <?php define('SMTP_PASS', 'tu-contraseña-del-correo');
  */
 header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
@@ -38,9 +38,13 @@ $smtp_host = 'smtp.hostinger.com';
 $smtp_user = $to;
 
 $pass = null;
-if (file_exists(__DIR__ . '/contact_config.php')) {
-  include __DIR__ . '/contact_config.php';
-  $pass = defined('SMTP_PASS') ? SMTP_PASS : null;
+$config_paths = [__DIR__ . '/contact_config.php', __DIR__ . '/../contact_config.php'];
+foreach ($config_paths as $path) {
+  if (file_exists($path)) {
+    include $path;
+    $pass = defined('SMTP_PASS') ? SMTP_PASS : null;
+    if ($pass !== null && $pass !== '') break;
+  }
 }
 if ($pass === null || $pass === '') {
   http_response_code(500);
