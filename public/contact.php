@@ -1,5 +1,6 @@
 <?php
 /**
+ * VERSION 2 - SOLO PUERTO 465 - NO STARTTLS
  * Formulario de contacto → envía a hola@mirtazaliauskas.com
  * Usa PHPMailer con SMTP Hostinger (smtp.hostinger.com:465) si está disponible.
  *
