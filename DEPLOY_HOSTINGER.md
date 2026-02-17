@@ -4,24 +4,18 @@ Este proyecto se exporta como sitio 100% estático.
 
 ---
 
-## Opción A: Hostinger leyendo la rama `build` (recomendado)
+## Opción A: Repo de deploy + Hostinger en `main` (recomendado)
 
-El build en el servidor de Hostinger **no genera** la carpeta `out` (limitación de su entorno). La solución es construir en **GitHub Actions** y que Hostinger sirva la rama **`build`**, que ya contiene el sitio estático.
+Así Hostinger usa siempre la rama **`main`** y no se resetea. El build se hace en GitHub Actions y se sube a un **repo solo para deploy**; Hostinger se conecta a ese repo.
 
-1. **En Hostinger (Deployments / Settings):**
-   - **Branch:** **`build`** (no `main`).
-   - **Build command:** `npm run build` (en esa rama solo hace `echo done`).
-   - **Output directory:** **`.`** (punto) o **`null`** — así se sirve la raíz, donde ya están `index.html`, `_next`, `en`, `es`.
-2. **En GitHub:** Cada push a **`main`** dispara el workflow: construye el sitio, sube la carpeta **`deploy`** (sitio + un `package.json` mínimo) a la rama **`build`**.
-3. **En Hostinger:** Activar **Auto Deployment** (webhook) para que, al actualizar `build`, se redespliegue el sitio.
+1. **Crear el repo de deploy** en GitHub (mismo usuario u org): p. ej. **`mirz-deploy`**. Puede estar vacío (sin README).
+2. **Token para el workflow:** En GitHub → Settings → Developer settings → Personal access tokens, creá un token con permiso **repo**. En el **repo de este proyecto** (mirz), Settings → Secrets and variables → Actions → New repository secret:
+   - **`DEPLOY_REPO`** = `tu-usuario/mirz-deploy` (ej. `polgold/mirz-deploy`)
+   - **`DEPLOY_TOKEN`** = el token que creaste
+3. **En Hostinger (Deployments):** Conectá el repo **mirz-deploy**, rama **`main`**, build command `npm run build`, output directory **`.`**. Activá Auto Deployment si querés.
+4. **Flujo:** Push a `main` del repo de código → el workflow construye y hace push a **mirz-deploy** (rama `main`) → Hostinger hace pull de `main` de mirz-deploy.
 
-**Resumen:** Push a `main` → GitHub Actions construye y sube a `build` → Hostinger hace pull de `build` y sirve la raíz (index.html, _next, en, es).
-
-Si el repo es privado, en Hostinger genera la SSH key y añádela en GitHub como Deploy key (solo lectura) del repo.
-
-### Si Hostinger cambia sola la rama a `main`
-
-En algunos paneles la rama se resetea a **`main`** después del deploy. **Solución:** después de cada deploy, entrá en **Deployments → Settings**, volvé a elegir la rama **`build`** y guardá.
+**Resumen:** Hostinger apunta a **mirz-deploy** con rama **main** → no tenés que tocar la rama nunca.
 
 ---
 

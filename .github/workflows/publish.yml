@@ -1,7 +1,7 @@
-# Al hacer push a main: build del sitio estático y push de /out a la rama build.
-# Hostinger debe tener GIT configurado para hacer pull de la rama "build" y usar esa raíz como document root.
+# Al hacer push a main: build del sitio estático y push a la rama main del repo de deploy.
+# Hostinger conecta a ese repo (mirz-deploy) con rama main → no se resetea la rama.
 
-name: Build and push to Hostinger (build branch)
+name: Build and push to deploy repo
 
 on:
   push:
@@ -9,12 +9,12 @@ on:
       - main
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: Build and push to build branch
+    name: Build and push to deploy repo (main)
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -72,20 +72,19 @@ jobs:
           mkdir -p deploy/public
           ls -la deploy/
 
-      - name: Push deploy/ a rama build
+      - name: Push deploy/ al repo de deploy (rama main)
         run: |
           echo "8_push" >> $GITHUB_STEP_SUMMARY
           cp -r deploy /tmp/deploy-site
+          cd /tmp
+          rm -rf deploy-repo && git init deploy-repo && cd deploy-repo
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git remote set-url origin "https://x-access-token:$GITHUB_TOKEN@github.com/${{ github.repository }}.git"
-          git checkout --orphan build
-          git reset --hard
-          git clean -fdx
           cp -r /tmp/deploy-site/. .
           git add -A
-          git status
           git commit -m "Deploy: ${{ github.sha }}"
-          git push -f origin build
+          git remote add origin "https://x-access-token:${{ secrets.DEPLOY_TOKEN }}@github.com/${{ secrets.DEPLOY_REPO }}.git"
+          git push -f origin main
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEPLOY_REPO: ${{ secrets.DEPLOY_REPO }}
+          DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
