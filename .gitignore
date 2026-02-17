@@ -54,6 +54,8 @@ yarn-error.log*
 
 # contraseña SMTP (crear en servidor, no commitear)
 public/contact_config.php
+# prueba SMTP local (no subir)
+public/test_contact_smtp.php
 
 # vercel
 .vercel

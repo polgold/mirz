@@ -72,6 +72,15 @@ jobs:
           mkdir -p deploy/public
           ls -la deploy/
 
+      - name: Setup PHP (Composer)
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          tools: composer
+
+      - name: Composer install (PHPMailer)
+        run: composer install --no-dev --no-interaction --working-dir=deploy
+
       - name: Push deploy/ al repo de deploy (rama main)
         run: |
           echo "8_push" >> $GITHUB_STEP_SUMMARY

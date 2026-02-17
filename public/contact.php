@@ -1,10 +1,9 @@
 <?php
 /**
  * Formulario de contacto → envía a hola@mirtazaliauskas.com
- * SMTP Hostinger: smtp.hostinger.com, puerto 587, STARTTLS
+ * Usa PHPMailer con SMTP Hostinger (smtp.hostinger.com:465) si está disponible.
  *
- * Config: busca contact_config.php en este directorio o en el padre (../).
- * Poniendo la config en el directorio padre no se pierde al hacer deploy.
+ * Config: contact_config.php en este directorio o en el padre (../).
  * Contenido: <?php define('SMTP_PASS', 'tu-contraseña-del-correo');
  */
 header('Content-Type: application/json; charset=utf-8');
@@ -34,9 +33,6 @@ if ($name === '' || $email === '' || $message === '') {
 }
 
 $to = 'hola@mirtazaliauskas.com';
-$smtp_host = 'smtp.hostinger.com';
-$smtp_user = $to;
-
 $pass = null;
 $config_paths = [__DIR__ . '/contact_config.php', __DIR__ . '/../contact_config.php'];
 foreach ($config_paths as $path) {
@@ -54,6 +50,46 @@ if ($pass === null || $pass === '') {
 
 $subject = 'Contacto web: ' . mb_substr($name, 0, 50);
 $body = "Nombre: $name\nEmail: $email\n\nMensaje:\n$message";
+
+// PHPMailer (recomendado por Hostinger)
+$autoload = __DIR__ . '/vendor/autoload.php';
+if (file_exists($autoload)) {
+  require_once $autoload;
+  use PHPMailer\PHPMailer\PHPMailer;
+  use PHPMailer\PHPMailer\SMTP;
+  use PHPMailer\PHPMailer\Exception;
+
+  $mail = new PHPMailer(true);
+  try {
+    $mail->isSMTP();
+    $mail->Host       = 'smtp.hostinger.com';
+    $mail->SMTPAuth   = true;
+    $mail->Username   = $to;
+    $mail->Password   = $pass;
+    $mail->SMTPSecure = 'ssl';
+    $mail->Port       = 465;
+    $mail->CharSet    = 'UTF-8';
+
+    $mail->setFrom($to, 'Sitio web');
+    $mail->addAddress($to);
+    $mail->addReplyTo($email, $name);
+    $mail->Subject = $subject;
+    $mail->Body    = $body;
+    $mail->AltBody = $body;
+
+    $mail->send();
+    echo json_encode(['ok' => true]);
+    exit;
+  } catch (Exception $e) {
+    http_response_code(503);
+    echo json_encode(['ok' => false, 'error' => 'SMTP failed: ' . $mail->ErrorInfo]);
+    exit;
+  }
+}
+
+// Fallback: SMTP manual (si no hay PHPMailer)
+$smtp_host = 'smtp.hostinger.com';
+$smtp_user = $to;
 $headers = "From: $to\r\nReply-To: $email\r\nContent-Type: text/plain; charset=UTF-8";
 
 function smtp_line($sock) {
@@ -70,16 +106,8 @@ function smtp_cmd($sock, $cmd) {
   return smtp_line($sock);
 }
 
-// Solo 465 SSL (evitar STARTTLS que suele fallar en Hostinger). Sin verificación de certificado.
 $ctx = stream_context_create(['ssl' => ['verify_peer' => false, 'verify_peer_name' => false]]);
-$sock = @stream_socket_client(
-  "ssl://$smtp_host:465",
-  $errno,
-  $errstr,
-  15,
-  STREAM_CLIENT_CONNECT,
-  $ctx
-);
+$sock = @stream_socket_client("ssl://$smtp_host:465", $errno, $errstr, 15, STREAM_CLIENT_CONNECT, $ctx);
 
 if (!$sock) {
   http_response_code(502);
@@ -101,11 +129,10 @@ if (strpos($auth, '235') === false) {
 
 smtp_cmd($sock, "MAIL FROM:<$smtp_user>");
 smtp_cmd($sock, "RCPT TO:<$to>");
-$r = smtp_cmd($sock, "DATA");
+smtp_cmd($sock, "DATA");
 fwrite($sock, "Subject: $subject\r\n$headers\r\n\r\n$body\r\n.\r\n");
 smtp_line($sock);
 smtp_cmd($sock, "QUIT");
 fclose($sock);
 
 echo json_encode(['ok' => true]);
-exit;
