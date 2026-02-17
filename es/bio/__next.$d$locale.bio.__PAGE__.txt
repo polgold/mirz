@@ -1,0 +1,56 @@
+1:"$Sreact.fragment"
+4:I[484,[],"OutletBoundary"]
+5:"$Sreact.suspense"
+:HL["/images/home/mir2.jpeg","image"]
+2:Tc84,<h1>Mirta Zaliauskas</h1>
+<p>Mirta Zaliauskas es una artista quilmeña con una extensa trayectoria en el campo de las artes visuales. Estudió en la Escuela de Bellas Artes "Carlos Morel", donde se graduó como Profesora de Artes Visuales y realizó el Profesorado Superior de Escultura.</p>
+<p>Dedicada principalmente a la escultura en diversos materiales y al dibujo, ha incursionado en múltiples técnicas, explorando de manera constante las distintas posibilidades expresivas del arte.</p>
+<p>En 1995 realizó un viaje de estudios a Europa, donde trabajó en diversos talleres, entre ellos el taller de Botero en Carrara. Allí profundizó en técnicas de escultura en bronce y mármol. Ha expuesto en el Museo Nacional de Vilnius (Lituania) y en galerías de Roma (Italia).</p>
+<p>A lo largo de su carrera participó en numerosos salones y exposiciones, entre ellos:</p>
+<ul>
+<li>Premio Bienal de Buenos Aires (1992) – Dibujo, Tercer Premio</li>
+<li>Universidad de Morón</li>
+<li>Centro Alvear (Recoleta)</li>
+<li>Salón Pequeño Formato, Palais de Glace (Recoleta)</li>
+<li>Patio de Escultores, Teatro General San Martín</li>
+<li>Escenografía en el Teatro General San Martín</li>
+<li>"100 Años de Borges" – Libro de Artistas a Borges (Teatro San Martín)</li>
+</ul>
+<p>Participó en simposios de pintura y escultura en Tilcara (Jujuy), San Martín de los Andes y Carlos Casares (Buenos Aires), donde actualmente se encuentran obras emplazadas en el espacio público.</p>
+<h2>Premios y Distinciones</h2>
+<ul>
+<li>Tercer Premio Dibujo, Bienal de Buenos Aires (1992)</li>
+<li>Primer Premio Escultura, Patio de Escultores (Morón, 1993)</li>
+<li>Menciones en Pequeño Formato (Dibujo y Escultura, Quilmes)</li>
+</ul>
+<h2>Museos y Exposiciones</h2>
+<p><strong>Museos Nacionales:</strong></p>
+<ul>
+<li>Museo de La Plata – Islas Malvinas</li>
+<li>Museo del Diario Clarín (Mar del Plata)</li>
+<li>Museo de Quilmes</li>
+<li>Museo de Tilcara</li>
+<li>Museo San Martín de los Andes</li>
+<li>Museo Carlos Casares</li>
+<li>Museo Islas Malvinas (2013) – Exposición de dibujos y esculturas</li>
+<li>Museo del Servicio Penitenciario – Muestra colectiva 20 años</li>
+<li>Museo del Tango (Ciudad de Buenos Aires)</li>
+</ul>
+<p><strong>Museos Internacionales:</strong></p>
+<ul>
+<li>Museo Nacional de Vilnius (Lituania)</li>
+<li>Art Latin America (Estados Unidos)</li>
+</ul>
+<p>Realizó un mural en la Escuela de Bellas Artes "La Cárcova" junto al maestro Ricardo Carpani, además de diversos proyectos murales y escultóricos.</p>
+<p>Participó en ferias como:</p>
+<ul>
+<li>Feria Puro Diseño (La Rural, Buenos Aires, 2005)</li>
+<li>Exposiciones en La Rural de Palermo (2010–2015)</li>
+<li>Feria DAS (2005–2012, La Plata y Quilmes)</li>
+<li>Galería Arenales (muestra permanente, 2015)</li>
+</ul>
+<p>En 2015 realizó una exposición en Estados Unidos y actualmente continúa exhibiendo su obra en distintas galerías del Estado de California.</p>
+<p>Desde hace más de 25 años ejerce la docencia en escuelas públicas de Quilmes. Ha expuesto de manera permanente en el Quilmes Apart Hotel, se desempeñó en el Museo Penitenciario de La Plata e integró el jurado de diversos concursos.</p>
+0:{"buildId":"0MRI5mBHtH1WCpVz3WZsj","rsc":["$","$1","c",{"children":[["$","article",null,{"className":"max-w-4xl","children":[["$","header",null,{"className":"mb-10 md:mb-12","children":["$","h1",null,{"className":"font-heading text-3xl font-medium tracking-tight text-neutral-900 md:text-4xl","children":"Bio"}]}],["$","div",null,{"className":"flex flex-col gap-8 md:flex-row md:items-start md:gap-10","children":[["$","figure",null,{"className":"shrink-0 overflow-hidden rounded-sm bg-neutral-100 md:w-56 md:max-w-[14rem]","children":["$","img",null,{"src":"/images/home/mir2.jpeg","alt":"","className":"h-auto w-full object-cover","width":224,"height":280}]}],["$","section",null,{"className":"min-w-0 flex-1 space-y-6","children":["$","div",null,{"className":"markdown-content max-w-none text-neutral-600 [&_h1]:font-heading [&_h1]:mb-4 [&_h1]:text-2xl [&_h1]:font-medium [&_h1]:text-neutral-900 [&_h2]:font-heading [&_h2]:mb-3 [&_h2]:mt-8 [&_h2]:text-xl [&_h2]:font-medium [&_h2]:text-neutral-900 [&_h3]:font-heading [&_h3]:mt-6 [&_h3]:text-lg [&_h3]:font-medium [&_h3]:text-neutral-900 [&_p]:leading-relaxed [&_p]:mb-4 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:mb-4 [&_li]:mb-1.5 [&_a]:text-neutral-800 [&_a]:underline [&_a]:decoration-neutral-300 [&_a]:transition-colors [&_a]:duration-200 hover:[&_a]:text-neutral-600 [&_a]:focus-visible:outline [&_a]:focus-visible:outline-2 [&_a]:focus-visible:outline-offset-2 [&_a]:focus-visible:outline-neutral-400 [&_strong]:font-medium [&_strong]:text-neutral-800","dangerouslySetInnerHTML":{"__html":"$2"}}]}]]}]]}],null,"$L3"]}],"loading":null,"isPartial":false}
+3:["$","$L4",null,{"children":["$","$5",null,{"name":"Next.MetadataOutlet","children":"$@6"}]}]
+6:null

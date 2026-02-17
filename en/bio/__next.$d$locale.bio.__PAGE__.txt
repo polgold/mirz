@@ -1,0 +1,56 @@
+1:"$Sreact.fragment"
+4:I[484,[],"OutletBoundary"]
+5:"$Sreact.suspense"
+:HL["/images/home/mir2.jpeg","image"]
+2:Tc32,<h1>Mirta Zaliauskas</h1>
+<p>Mirta Zaliauskas is a visual artist from Quilmes with an extensive trajectory in the visual arts. She studied at the "Carlos Morel" School of Fine Arts, where she graduated as a Professor of Visual Arts and completed the Higher Education degree in Sculpture.</p>
+<p>Dedicated mainly to sculpture in various materials and to drawing, she has worked in multiple techniques, constantly exploring the different expressive possibilities of art.</p>
+<p>In 1995 she undertook a study trip to Europe, where she worked in various workshops, including Botero's workshop in Carrara. There she deepened her skills in bronze and marble sculpture. She has exhibited at the National Museum of Vilnius (Lithuania) and in galleries in Rome (Italy).</p>
+<p>Throughout her career she has participated in numerous salons and exhibitions, including:</p>
+<ul>
+<li>Buenos Aires Biennial Award (1992) – Drawing, Third Prize</li>
+<li>Universidad de Morón</li>
+<li>Centro Alvear (Recoleta)</li>
+<li>Small Format Salon, Palais de Glace (Recoleta)</li>
+<li>Patio de Escultores, Teatro General San Martín</li>
+<li>Set design at Teatro General San Martín</li>
+<li>"100 Years of Borges" – Artists' Book for Borges (Teatro San Martín)</li>
+</ul>
+<p>She has participated in painting and sculpture symposia in Tilcara (Jujuy), San Martín de los Andes and Carlos Casares (Buenos Aires), where her works are now installed in public spaces.</p>
+<h2>Awards and Distinctions</h2>
+<ul>
+<li>Third Prize in Drawing, Buenos Aires Biennial (1992)</li>
+<li>First Prize in Sculpture, Patio de Escultores (Morón, 1993)</li>
+<li>Mentions in Small Format (Drawing and Sculpture, Quilmes)</li>
+</ul>
+<h2>Museums and Exhibitions</h2>
+<p><strong>National Museums:</strong></p>
+<ul>
+<li>Museo de La Plata – Islas Malvinas</li>
+<li>Museo del Diario Clarín (Mar del Plata)</li>
+<li>Museo de Quilmes</li>
+<li>Museo de Tilcara</li>
+<li>Museo San Martín de los Andes</li>
+<li>Museo Carlos Casares</li>
+<li>Museo Islas Malvinas (2013) – Exhibition of drawings and sculptures</li>
+<li>Museo del Servicio Penitenciario – 20-year group show</li>
+<li>Museo del Tango (Buenos Aires)</li>
+</ul>
+<p><strong>International Museums:</strong></p>
+<ul>
+<li>National Museum of Vilnius (Lithuania)</li>
+<li>Art Latin America (United States)</li>
+</ul>
+<p>She created a mural at the "La Cárcova" School of Fine Arts with master Ricardo Carpani, as well as various mural and sculptural projects.</p>
+<p>She has participated in fairs such as:</p>
+<ul>
+<li>Feria Puro Diseño (La Rural, Buenos Aires, 2005)</li>
+<li>Exhibitions at La Rural de Palermo (2010–2015)</li>
+<li>Feria DAS (2005–2012, La Plata and Quilmes)</li>
+<li>Galería Arenales (permanent show, 2015)</li>
+</ul>
+<p>In 2015 she held an exhibition in the United States and currently continues to exhibit her work in various galleries in the State of California.</p>
+<p>For over 25 years she has taught in public schools in Quilmes. She has exhibited permanently at Quilmes Apart Hotel, worked at the Museo Penitenciario in La Plata and served on the jury of various competitions.</p>
+0:{"buildId":"0MRI5mBHtH1WCpVz3WZsj","rsc":["$","$1","c",{"children":[["$","article",null,{"className":"max-w-4xl","children":[["$","header",null,{"className":"mb-10 md:mb-12","children":["$","h1",null,{"className":"font-heading text-3xl font-medium tracking-tight text-neutral-900 md:text-4xl","children":"Bio"}]}],["$","div",null,{"className":"flex flex-col gap-8 md:flex-row md:items-start md:gap-10","children":[["$","figure",null,{"className":"shrink-0 overflow-hidden rounded-sm bg-neutral-100 md:w-56 md:max-w-[14rem]","children":["$","img",null,{"src":"/images/home/mir2.jpeg","alt":"","className":"h-auto w-full object-cover","width":224,"height":280}]}],["$","section",null,{"className":"min-w-0 flex-1 space-y-6","children":["$","div",null,{"className":"markdown-content max-w-none text-neutral-600 [&_h1]:font-heading [&_h1]:mb-4 [&_h1]:text-2xl [&_h1]:font-medium [&_h1]:text-neutral-900 [&_h2]:font-heading [&_h2]:mb-3 [&_h2]:mt-8 [&_h2]:text-xl [&_h2]:font-medium [&_h2]:text-neutral-900 [&_h3]:font-heading [&_h3]:mt-6 [&_h3]:text-lg [&_h3]:font-medium [&_h3]:text-neutral-900 [&_p]:leading-relaxed [&_p]:mb-4 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:mb-4 [&_li]:mb-1.5 [&_a]:text-neutral-800 [&_a]:underline [&_a]:decoration-neutral-300 [&_a]:transition-colors [&_a]:duration-200 hover:[&_a]:text-neutral-600 [&_a]:focus-visible:outline [&_a]:focus-visible:outline-2 [&_a]:focus-visible:outline-offset-2 [&_a]:focus-visible:outline-neutral-400 [&_strong]:font-medium [&_strong]:text-neutral-800","dangerouslySetInnerHTML":{"__html":"$2"}}]}]]}]]}],null,"$L3"]}],"loading":null,"isPartial":false}
+3:["$","$L4",null,{"children":["$","$5",null,{"name":"Next.MetadataOutlet","children":"$@6"}]}]
+6:null
