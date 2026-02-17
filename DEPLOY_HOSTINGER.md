@@ -19,6 +19,10 @@ El build en el servidor de Hostinger **no genera** la carpeta `out` (limitación
 
 Si el repo es privado, en Hostinger genera la SSH key y añádela en GitHub como Deploy key (solo lectura) del repo.
 
+### Si Hostinger cambia sola la rama a `main`
+
+En algunos paneles la rama se resetea a **`main`** después del deploy. **Solución:** después de cada deploy, entrá en **Deployments → Settings**, volvé a elegir la rama **`build`** y guardá.
+
 ---
 
 ## Opción B: Subida manual

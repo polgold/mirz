@@ -1,7 +1,7 @@
 <?php
 /**
  * Formulario de contacto → envía a hola@mirtazaliauskas.com
- * SMTP Hostinger: smtp.hostinger.com, puerto 465, SSL
+ * SMTP Hostinger: smtp.hostinger.com, puerto 587, STARTTLS
  *
  * En el servidor (Hostinger), creá contact_config.php en el mismo directorio con:
  * <?php define('SMTP_PASS', 'tu-contraseña-del-correo');
@@ -35,7 +35,6 @@ if ($name === '' || $email === '' || $message === '') {
 
 $to = 'hola@mirtazaliauskas.com';
 $smtp_host = 'smtp.hostinger.com';
-$smtp_port = 465;
 $smtp_user = $to;
 
 $pass = null;
@@ -53,24 +52,6 @@ $subject = 'Contacto web: ' . mb_substr($name, 0, 50);
 $body = "Nombre: $name\nEmail: $email\n\nMensaje:\n$message";
 $headers = "From: $to\r\nReply-To: $email\r\nContent-Type: text/plain; charset=UTF-8";
 
-$errno = 0;
-$errstr = '';
-$ctx = stream_context_create(['ssl' => ['verify_peer' => true]]);
-$sock = @stream_socket_client(
-  "ssl://$smtp_host:$smtp_port",
-  $errno,
-  $errstr,
-  15,
-  STREAM_CLIENT_CONNECT,
-  $ctx
-);
-
-if (!$sock) {
-  http_response_code(502);
-  echo json_encode(['ok' => false, 'error' => 'SMTP connection failed']);
-  exit;
-}
-
 function smtp_line($sock) {
   $line = '';
   while (($c = fgetc($sock)) !== false) {
@@ -85,7 +66,41 @@ function smtp_cmd($sock, $cmd) {
   return smtp_line($sock);
 }
 
+// Puerto 587 + STARTTLS (más fiable en Hostinger que 465 SSL)
+$errno = 0;
+$errstr = '';
+$sock = @stream_socket_client(
+  "tcp://$smtp_host:587",
+  $errno,
+  $errstr,
+  15,
+  STREAM_CLIENT_CONNECT
+);
+
+if (!$sock) {
+  http_response_code(502);
+  echo json_encode(['ok' => false, 'error' => 'SMTP connection failed']);
+  exit;
+}
+
 $w = smtp_line($sock);
+smtp_cmd($sock, "EHLO " . $smtp_host);
+$starttls = smtp_cmd($sock, "STARTTLS");
+if (strpos($starttls, '220') === false) {
+  fclose($sock);
+  http_response_code(502);
+  echo json_encode(['ok' => false, 'error' => 'SMTP STARTTLS failed']);
+  exit;
+}
+
+$ctx = stream_context_create(['ssl' => ['verify_peer' => true]]);
+if (!stream_socket_enable_crypto($sock, true, STREAM_CRYPTO_METHOD_TLS_CLIENT)) {
+  fclose($sock);
+  http_response_code(502);
+  echo json_encode(['ok' => false, 'error' => 'SMTP TLS failed']);
+  exit;
+}
+
 smtp_cmd($sock, "EHLO " . $smtp_host);
 smtp_cmd($sock, "AUTH LOGIN");
 smtp_cmd($sock, base64_encode($smtp_user));
