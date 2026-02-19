@@ -2,7 +2,7 @@ import Container from './Container';
 
 export default function Footer() {
   return (
-    <footer className="mt-auto border-t border-[var(--border)] bg-[var(--background)] py-12 md:py-14">
+    <footer role="contentinfo" className="mt-auto border-t border-[var(--border)] bg-[var(--background)] py-12 md:py-14" aria-label="Site footer">
       <Container>
         <div className="flex flex-col items-center gap-6 text-center">
           <div className="flex items-center gap-1">

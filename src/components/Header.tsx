@@ -60,6 +60,7 @@ export default function Header() {
 
   return (
     <header
+      role="banner"
       className={`sticky top-0 z-50 border-b border-[var(--border)]/30 text-white transition-colors duration-300 ${
         scrolled
           ? 'bg-[var(--foreground)]/90 backdrop-blur-[8px] supports-[backdrop-filter]:bg-[var(--foreground)]/85'

@@ -1,9 +1,16 @@
+import type { Metadata } from 'next';
 import { setRequestLocale } from 'next-intl/server';
 import { getCopy } from '@/lib/markdown';
+import { buildPageMetadata } from '@/lib/seo';
 import MarkdownContent from '@/components/MarkdownContent';
 import Reveal from '@/components/Reveal';
 
 type Props = { params: Promise<{ locale: string }> };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  return buildPageMetadata('statement', locale);
+}
 
 export default async function StatementPage({ params }: Props) {
   const { locale } = await params;

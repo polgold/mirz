@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, Lora } from "next/font/google";
 import "./globals.css";
 
@@ -16,11 +16,17 @@ const lora = Lora({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://mirtazaliauskas.com"),
-  title: "Mirta Zaliauskas",
-  description: "Artista visual — Escultura, dibujo, pintura",
+  title: { default: "Mirta Zaliauskas", template: "%s" },
+  description: "Mirta Zaliauskas – Argentine visual artist. Mixed media, drawing, engraving and recycled materials.",
   openGraph: {
     url: "https://mirtazaliauskas.com",
+    siteName: "Mirta Zaliauskas",
   },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({

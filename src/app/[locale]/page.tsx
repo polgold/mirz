@@ -1,6 +1,8 @@
+import type { Metadata } from 'next';
 import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { getCopy } from '@/lib/markdown';
 import { getHomeHeroMedia } from '@/lib/images';
+import { buildPageMetadata } from '@/lib/seo';
 import MarkdownContent from '@/components/MarkdownContent';
 import Reveal from '@/components/Reveal';
 import { Link } from '@/i18n/navigation';
@@ -8,6 +10,11 @@ import { Link } from '@/i18n/navigation';
 const YOUTUBE_HERO_ID = 'h1AbuIRyEwc';
 
 type Props = { params: Promise<{ locale: string }> };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  return buildPageMetadata('', locale);
+}
 
 export default async function HomePage({ params }: Props) {
   const { locale } = await params;
@@ -96,6 +103,14 @@ export default async function HomePage({ params }: Props) {
           <MarkdownContent html={content} />
         </Reveal>
       </article>
+
+      <section aria-label="About the artist summary" className="mt-16 border-t border-[var(--border)] pt-12 md:mt-20 md:pt-14">
+        <p className="max-w-2xl text-[var(--muted)] leading-relaxed">
+          Mirta Zaliauskas is an Argentine contemporary visual artist working with mixed media,
+          drawing, engraving and recycled materials. Her work explores transformation,
+          landscapes and human emotion through material experimentation.
+        </p>
+      </section>
     </>
   );
 }

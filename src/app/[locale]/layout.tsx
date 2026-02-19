@@ -6,6 +6,7 @@ import { routing } from '@/i18n/routing';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import SetLocaleAttr from '@/components/SetLocaleAttr';
+import JsonLdPerson from '@/components/JsonLdPerson';
 
 type Props = {
   children: React.ReactNode;
@@ -25,9 +26,10 @@ export default async function LocaleLayout({ children, params }: Props) {
   return (
     <NextIntlClientProvider messages={messages}>
       <SetLocaleAttr locale={locale} />
+      <JsonLdPerson />
       <div className="min-h-screen flex flex-col bg-[var(--background)] text-[var(--foreground)]">
         <Header />
-        <main className="flex-1 py-16 md:py-24 lg:py-28">
+        <main className="flex-1 py-16 md:py-24 lg:py-28" id="main-content" aria-label="Main content">
           <div className="mx-auto w-full max-w-5xl px-4 sm:px-6 lg:px-8">
             {children}
           </div>
