@@ -19,11 +19,11 @@ export default function NavLink({ href, children, variant = 'default' }: Props) 
     <Link
       href={href}
       className={`
-        relative text-sm transition-colors duration-200
+        link-underline-animated relative inline-block text-sm tracking-wide transition-colors duration-200
         focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus:outline-none
         ${isDark
           ? `text-white/90 hover:text-white focus-visible:outline-white ${isActive ? 'font-medium text-white' : ''}`
-          : `text-neutral-500 hover:text-neutral-900 focus-visible:outline-neutral-400 ${isActive ? 'font-medium text-neutral-900' : ''}`
+          : `text-neutral-600 hover:text-neutral-900 focus-visible:outline-neutral-400 ${isActive ? 'font-medium text-neutral-900' : ''}`
         }
       `}
     >

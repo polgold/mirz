@@ -25,9 +25,9 @@ export default async function LocaleLayout({ children, params }: Props) {
   return (
     <NextIntlClientProvider messages={messages}>
       <SetLocaleAttr locale={locale} />
-      <div className="min-h-screen flex flex-col bg-white">
+      <div className="min-h-screen flex flex-col bg-[var(--background)] text-[var(--foreground)]">
         <Header />
-        <main className="flex-1 py-12 md:py-16 lg:py-20">
+        <main className="flex-1 py-16 md:py-24 lg:py-28">
           <div className="mx-auto w-full max-w-5xl px-4 sm:px-6 lg:px-8">
             {children}
           </div>

@@ -1,13 +1,24 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --muted: #525252;
-  --border: #e5e5e5;
-  /* Spacing scale (for reference; use Tailwind spacing in components) */
-  --space-section: 4rem;
+  /* Papel: off-white cálido */
+  --background: #fbfaf7;
+  --foreground: #2a2a2a;
+  --foreground-soft: #4a4a4a;
+  --muted: #6b6b6b;
+  --muted-light: #9a9a9a;
+  --border: #e8e6e2;
+  --border-soft: #f0eeea;
+  --space-section: 5rem;
   --space-block: 1.5rem;
+  --max-width-content: 42rem;
+  --max-width-wide: 64rem;
+  --ease-editorial: cubic-bezier(0.22, 1, 0.36, 1);
+  --reveal-duration: 900ms;
+  --reveal-ease: var(--ease-editorial);
+  /* Sombras suaves y amplias */
+  --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.04);
+  --shadow-card: 0 10px 30px rgba(0, 0, 0, 0.05);
 }
 
 @theme inline {
@@ -26,39 +37,188 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  font-size: 1rem;
+  line-height: 1.65;
+  letter-spacing: 0.01em;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Grain muy sutil (CSS only, sin imágenes) */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+@media (prefers-reduced-motion: reduce) {
+  body::before { display: none; }
+}
+
 ::selection {
-  background: #e5e5e5;
+  background: #e5e3df;
   color: var(--foreground);
 }
 
-/* Focus visible for accessibility */
 :focus-visible {
-  outline: 2px solid #737373;
+  outline: 2px solid var(--foreground-soft);
   outline-offset: 2px;
 }
 
-/* Strong headings: use serif accent in layout when needed */
+@media (prefers-reduced-motion: reduce) {
+  :root { --reveal-duration: 0ms; }
+  .reveal-initial, .reveal-visible, .hero-fade-in, .link-underline-animated::after {
+    transition: none !important;
+    animation: none !important;
+  }
+  .lightbox-backdrop, .lightbox-image {
+    opacity: 1 !important;
+    animation: none !important;
+  }
+  .card-hover .card-hover-img { transform: none; }
+}
+
+/* ---- Tipografía editorial ---- */
+h1, .text-h1 {
+  font-family: var(--font-lora), ui-serif, Georgia, serif;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.18;
+}
+
+h2, .text-h2 {
+  font-family: var(--font-lora), ui-serif, Georgia, serif;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.22;
+}
+
 .font-heading {
   font-family: var(--font-lora), ui-serif, Georgia, serif;
 }
 
-/* Muted text utility */
-.text-muted {
-  color: var(--muted);
-}
+.text-muted { color: var(--muted); }
 
-/* Markdown content rhythm */
+/* Texto curatorial */
 .markdown-content {
-  --md-space: 1.25rem;
+  --md-space: 1.55rem;
+  line-height: 1.7;
 }
-.markdown-content p + p {
-  margin-top: var(--md-space);
-}
+.markdown-content p { line-height: 1.7; }
+.markdown-content p + p { margin-top: var(--md-space); }
 .markdown-content h1, .markdown-content h2, .markdown-content h3 {
   font-family: var(--font-lora), ui-serif, Georgia, serif;
   font-weight: 500;
+  letter-spacing: -0.01em;
+}
+.markdown-content strong {
+  font-weight: 500;
+  color: var(--foreground-soft);
+}
+.markdown-content em {
+  font-style: italic;
+  color: var(--foreground-soft);
+}
+
+/* Reveal */
+.reveal-initial {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity var(--reveal-duration) var(--reveal-ease),
+              transform var(--reveal-duration) var(--reveal-ease);
+}
+.reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-fade-in {
+    animation: heroFadeIn 0.9s var(--ease-editorial) forwards;
+  }
+}
+@keyframes heroFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Botones */
+.btn-premium {
+  transition: opacity 0.25s var(--ease-editorial), transform 0.25s var(--ease-editorial), box-shadow 0.25s var(--ease-editorial);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .btn-premium:hover:not(:disabled) {
+    opacity: 0.92;
+    transform: translateY(-1px);
+  }
+  .btn-premium:active:not(:disabled) { transform: translateY(0); }
+}
+.btn-premium:focus-visible {
+  outline: 2px solid var(--foreground-soft);
+  outline-offset: 2px;
+}
+
+/* Link: underline 1px fino animado */
+.link-underline-animated {
+  position: relative;
+  transition: color 0.2s ease;
+}
+.link-underline-animated::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s var(--ease-editorial);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .link-underline-animated:hover::after,
+  .link-underline-animated:focus-visible::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}
+
+/* Gallery: hover premium 500–650ms */
+.card-hover {
+  transition: box-shadow 0.55s var(--ease-editorial), transform 0.55s var(--ease-editorial);
+}
+.card-hover .card-hover-img {
+  transition: transform 0.6s var(--ease-editorial);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .card-hover:hover {
+    box-shadow: var(--shadow-card);
+  }
+  .card-hover:hover .card-hover-img {
+    transform: scale(1.02);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .card-hover .card-hover-img { transform: none; }
+}
+
+/* Lightbox: backdrop graphite translúcido */
+.lightbox-backdrop {
+  background: rgba(42, 42, 42, 0.92);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .lightbox-backdrop {
+    animation: lightboxFadeIn 0.4s var(--ease-editorial) forwards;
+  }
+  .lightbox-image {
+    animation: lightboxScaleIn 0.5s var(--ease-editorial) forwards;
+  }
+}
+@keyframes lightboxFadeIn { to { opacity: 1; } }
+@keyframes lightboxScaleIn {
+  from { opacity: 0; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1); }
 }

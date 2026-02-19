@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 
-const TO_EMAIL = 'hola@mirtazaliauskas.com';
 const ENDPOINT = '/contact.php';
 
 export default function ContactForm() {
@@ -37,18 +36,20 @@ export default function ContactForm() {
         form.reset();
       } else {
         setStatus('error');
-        setMessage(data.error ? `${t('error')} (${data.error})` : t('error'));
+        const detail = data.error || `HTTP ${res.status}: ${text.slice(0, 80)}`;
+        setMessage(`${t('error')} (${detail})`);
       }
-    } catch {
+    } catch (err) {
       setStatus('error');
-      setMessage(t('error'));
+      const msg = err instanceof Error ? err.message : 'Error de red';
+      setMessage(`${t('error')} (${msg})`);
     }
   }
 
   return (
-    <form onSubmit={handleSubmit} className="mt-8 space-y-5">
+    <form onSubmit={handleSubmit} className="mt-8 space-y-6">
       <div>
-        <label htmlFor="contact-name" className="mb-1.5 block text-sm font-medium text-neutral-700">
+        <label htmlFor="contact-name" className="mb-1.5 block text-sm font-medium tracking-wide text-neutral-700">
           {t('name')}
         </label>
         <input
@@ -56,11 +57,11 @@ export default function ContactForm() {
           name="name"
           type="text"
           required
-          className="w-full rounded-md border border-neutral-300 bg-white px-3 py-2 text-neutral-900 shadow-sm focus:border-neutral-500 focus:outline-none focus:ring-1 focus:ring-neutral-500"
+          className="w-full rounded-lg border border-neutral-300 bg-white px-3.5 py-2.5 text-neutral-900 shadow-sm transition-colors duration-200 placeholder:text-neutral-400 focus:border-neutral-500 focus:outline-none focus:ring-1 focus:ring-neutral-500"
         />
       </div>
       <div>
-        <label htmlFor="contact-email" className="mb-1.5 block text-sm font-medium text-neutral-700">
+        <label htmlFor="contact-email" className="mb-1.5 block text-sm font-medium tracking-wide text-neutral-700">
           {t('email')}
         </label>
         <input
@@ -68,11 +69,11 @@ export default function ContactForm() {
           name="email"
           type="email"
           required
-          className="w-full rounded-md border border-neutral-300 bg-white px-3 py-2 text-neutral-900 shadow-sm focus:border-neutral-500 focus:outline-none focus:ring-1 focus:ring-neutral-500"
+          className="w-full rounded-lg border border-neutral-300 bg-white px-3.5 py-2.5 text-neutral-900 shadow-sm transition-colors duration-200 placeholder:text-neutral-400 focus:border-neutral-500 focus:outline-none focus:ring-1 focus:ring-neutral-500"
         />
       </div>
       <div>
-        <label htmlFor="contact-message" className="mb-1.5 block text-sm font-medium text-neutral-700">
+        <label htmlFor="contact-message" className="mb-1.5 block text-sm font-medium tracking-wide text-neutral-700">
           {t('message')}
         </label>
         <textarea
@@ -80,14 +81,14 @@ export default function ContactForm() {
           name="message"
           rows={5}
           required
-          className="w-full rounded-md border border-neutral-300 bg-white px-3 py-2 text-neutral-900 shadow-sm focus:border-neutral-500 focus:outline-none focus:ring-1 focus:ring-neutral-500"
+          className="w-full rounded-lg border border-neutral-300 bg-white px-3.5 py-2.5 text-neutral-900 shadow-sm transition-colors duration-200 placeholder:text-neutral-400 focus:border-neutral-500 focus:outline-none focus:ring-1 focus:ring-neutral-500"
         />
       </div>
       <div className="flex flex-col gap-2">
         <button
           type="submit"
           disabled={status === 'sending'}
-          className="rounded-md bg-neutral-900 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-neutral-800 focus:outline-none focus:ring-2 focus:ring-neutral-500 focus:ring-offset-2 disabled:opacity-60"
+          className="btn-premium rounded-lg bg-neutral-900 px-5 py-3 text-sm font-medium tracking-wide text-white disabled:opacity-60"
         >
           {status === 'sending' ? t('sending') : t('submit')}
         </button>

@@ -6,13 +6,25 @@ const IMAGES_DIR = path.join(process.cwd(), 'public', 'images');
 const IMAGE_EXTENSIONS = new Set(['.jpg', '.jpeg', '.png', '.gif', '.webp', '.avif']);
 const VIDEO_EXTENSIONS = new Set(['.mp4', '.webm']);
 
-/** Solo estas categorías se muestran en Works (sin Home ni Media). */
-const WORKS_CATEGORY_SLUGS = new Set(['escultura', 'esculturas', 'vidrio', 'pinturas']);
+/** Categorías / series del folleto: paisajes, dibujo-carbonilla, grabados, tango, plástico reutilizado + existentes */
+const WORKS_CATEGORY_SLUGS = new Set([
+  'escultura', 'esculturas', 'vidrio', 'pinturas',
+  'paisajes', 'dibujo-carbonilla', 'grabados', 'tango', 'plastico-reutilizado',
+]);
+
+export type GalleryImage = {
+  src: string;
+  alt: string;
+  title?: string;
+  technique?: string;
+  measure?: string;
+  price?: string;
+};
 
 export type GalleryCategory = {
   slug: string;
   name: string;
-  images: { src: string; alt: string }[];
+  images: GalleryImage[];
 };
 
 function isImageFile(name: string): boolean {
@@ -40,7 +52,7 @@ export function getGalleryCategories(): GalleryCategory[] {
     if (!WORKS_CATEGORY_SLUGS.has(folder.toLowerCase())) continue;
     const folderPath = path.join(IMAGES_DIR, folder);
     const files = (fs.readdirSync(folderPath) as string[]).filter(isImageFile).sort();
-    const images = files.map((file) => ({
+    const images: GalleryImage[] = files.map((file) => ({
       src: `/images/${folder}/${file}`,
       alt: file.replace(path.extname(file), '').replace(/[-_]/g, ' '),
     }));
